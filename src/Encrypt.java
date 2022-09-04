@@ -8,33 +8,36 @@ public class Encrypt {
         String text = scanner.nextLine();
         System.out.print("Enter Key:");
         String key = scanner.nextLine();
-        System.out.println(VigenereEncode(text.toLowerCase(), key));
-
+        System.out.println(VigenereEncrypt(text.toLowerCase(), key));
+        scanner.close();
     }
 
 
-public static char[] VigenereEncode(String text, String key) {
+public static String VigenereEncrypt(String text, String key) {
     char[] cleanText = removePunct(text).toCharArray();
-    int[] textAsInts = StringToIntArray(cleanText);
-    int[] keyAsInt = StringToIntArray(key.toCharArray());
-    int keyLength = key.length();
-    int[] encryptChars = new int[cleanText.length];
-    for (int i = 0; i<textAsInts.length; i++){
-        encryptChars[i] = 'a'+(cleanText[i]+keyAsInt[i%keyLength])%26;
+    char[] keyChars = key.toCharArray();
+    for (int i = 0; i < cleanText.length; i++) {
+        cleanText[i] = (char)((((cleanText[i] - 'a') + (keyChars[i % keyChars.length] - 'a')) % 26) + 'a');
     }
-    
-    return char[] (encryptChars);
+    return String.copyValueOf(cleanText);
+}
+
+public static String VigenereDecrypt(String text, String key) {
+    char[] cleanText = removePunct(text).toCharArray();
+    char[] keyChars = key.toCharArray();
+    for (int i = 0; i < cleanText.length; i++) {
+        int a = (((cleanText[i] - 'a') - (keyChars[i % keyChars.length] - 'a')) % 26);
+        if (a < 0) {
+            cleanText[i] = (char)(a + 26 + 'a');
+        }
+        else {
+            cleanText[i] = (char)(a + 'a');
+        }
+    }
+    return String.copyValueOf(cleanText);
 }
 
 public static String removePunct(String text) {
     return text.replaceAll("[^a-z]", "");
-}
-
-public static int[] StringToIntArray (char[] cleanText){
-    int[] textAsInts = new int[cleanText.length];
-    for(int i = 0;i<cleanText.length;i++){
-        textAsInts[i] = cleanText[i] - 'a';
-    }
-    return textAsInts;
 }
 }
