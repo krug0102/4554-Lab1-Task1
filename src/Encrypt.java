@@ -54,4 +54,5 @@ public class Encrypt {
 		}
 		return String.valueOf(decryptChars);
 	}
+
 }
