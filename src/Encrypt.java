@@ -32,7 +32,7 @@ public class Encrypt {
 	}
 
 	public static String removePunct(String text) {
-		return text.replaceAll("[^a-z]", "");
+		return text.replaceAll("[^a-z]", ""); // Removes non lowcase, not up to lab exact specs, but handy
 	}
 
 	public static int[] StringToIntArray(String cleanTextString) {
